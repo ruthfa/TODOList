@@ -1,0 +1,43 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "bootstrap/utils.html" as utils %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet"
+      href="{{url_for('.static', filename='styles.css')}}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('.static', filename='scripts.js')}}"></script>
+{{super()}}
+{% endblock %}
+
+{% block title %}My TODOlist{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+  <!-- ... -->
+</div>
+{% endblock %}
+
+{% block content %}
+  <h1>Welcome to My TODO List</h1>
+ <div class="container">
+     <div class="row">
+         <h2>Please insert a new task</h2>
+         <div class="col-lg-8 col-md-10 mx-auto">
+             {{ wtf.quick_form(form, novalidate='True', button_map={"submit": "primary"}) }}
+         </div>
+     </div>
+ </div>
+<div class = "container">
+      {%for task in tasks %}
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+            <h1>{{task.task}}</h1>
+                <a class="btn btn-outline-success" href="{{url_for('remove_task', index=task.id)}}" role="button">Done It!</a>
+            </div>
+        </div>
+     {% endfor %}
+  </div>
+{% endblock %}
